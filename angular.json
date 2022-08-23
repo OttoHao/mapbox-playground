@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "bing-map": {
+    "mapbox-playground": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,18 +20,16 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/bing-map",
+            "outputPath": "dist/mapbox-playground",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "less",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.less"
+              "src/styles.less",
+              "./node_modules/mapbox-gl/dist/mapbox-gl.css"
             ],
             "scripts": []
           },
@@ -72,18 +70,25 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "bing-map:build:production"
+              "browserTarget": "mapbox-playground:build:production"
             },
             "development": {
-              "browserTarget": "bing-map:build:development"
+              "browserTarget": "mapbox-playground:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 4200,
+            "ssl": true,
+            "sslKey": "ssl/server.key",
+            "sslCert": "ssl/server.crt",
+            "publicHost": "http://localhost:4200"
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "bing-map:build"
+            "browserTarget": "mapbox-playground:build"
           }
         },
         "test": {
@@ -94,18 +99,13 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "less",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.less"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.less"],
             "scripts": []
           }
         }
       }
     }
   },
-  "defaultProject": "bing-map"
+  "defaultProject": "mapbox-playground"
 }
