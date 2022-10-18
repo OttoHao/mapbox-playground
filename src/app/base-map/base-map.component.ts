@@ -1,5 +1,8 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import * as mapboxgl from 'mapbox-gl';
 import { MapComponent, MapService } from 'ngx-mapbox-gl';
+import { take } from 'rxjs';
+import { MapboxStyleService } from './mapbox-style-service/mapbox-style.service';
 
 @Component({
   selector: 'app-base-map',
@@ -7,12 +10,18 @@ import { MapComponent, MapService } from 'ngx-mapbox-gl';
   styleUrls: ['./base-map.component.less'],
   providers: [MapService],
 })
-export class BaseMapComponent implements AfterViewInit {
-  @ViewChild(MapComponent) public mapComponent!: MapComponent;
-  constructor(private mapService: MapService) {}
-  ngAfterViewInit(): void {
-    // a workaround to change to reference of map service to the wrapper's injected map service
-    this.mapComponent['mapService'] = this.mapService;
-    console.log(this.mapComponent);
+export class BaseMapComponent extends MapComponent {
+  constructor(
+    private baseMapService: MapService,
+    private mapboxStyleService: MapboxStyleService
+  ) {
+    super(baseMapService);
+    this.mapboxStyleService
+      .get()
+      .pipe(take(1))
+      .subscribe((style) => {
+        this.style = style;
+        this.baseMapService.updateStyle(this.style as mapboxgl.Style);
+      });
   }
 }

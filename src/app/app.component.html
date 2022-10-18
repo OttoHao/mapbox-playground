@@ -1,9 +1,4 @@
-<mgl-map
-  [style]="'mapbox://styles/mapbox/satellite-v9'"
-  [zoom]="[18]"
-  [center]="[-101.7822665, 33.58803121]"
-  (mapLoad)="onMapLoad($event)"
->
+<app-base-map [zoom]="[18]" [center]="[-101.7822665, 33.58803121]">
   <mgl-layer
     id="test-layer"
     type="fill"
@@ -14,4 +9,4 @@
   >
     <div>dsadsad</div>
   </mgl-layer>
-</mgl-map>
+</app-base-map>
